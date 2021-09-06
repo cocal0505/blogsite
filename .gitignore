@@ -44,3 +44,23 @@ pnpm-debug.log*
       //   listTitle : "happyBirth22 day",
       //   listAuthor : "Ju232323no",
       // }, 
+
+
+
+      // v-for="dropdown in dropdowns"
+      // :key="dropdown.title"
+      // class="list-item">
+      // <RouterLink
+      //   :to="dropdown.link">
+      //   {{ dropdown.title }}
+      // </RouterLink>
+
+
+      // {
+      //       title3: "Register",
+      //       link: "#"
+      //   },
+      //   {
+      //       title4: "ChangePW",
+      //       link: "#"
+      //   },

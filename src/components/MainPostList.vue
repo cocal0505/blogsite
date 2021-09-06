@@ -35,12 +35,12 @@ export default {
   },
    computed:{
       toogledPadding2(){
-          return this.$store.state.status 
+          return this.$store.state.Postlist.status 
       },
     },
     methods:{
        postNewList(){
-          this.$store.commit('postnewstatus')
+          this.$store.commit('Postlist/postnewstatus')
       }
     }
     

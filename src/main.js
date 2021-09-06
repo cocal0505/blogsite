@@ -4,8 +4,8 @@ import router from './router/index.js'
 import store from './store/index.js'
 
 createApp(App)
-    .use(store)
     .use(router)
+    .use(store)
     .mount('#app')
 
 

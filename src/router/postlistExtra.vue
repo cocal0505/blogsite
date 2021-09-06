@@ -13,7 +13,7 @@ export default {
  
   },
    created(){
-      this.$store.commit('resetState')
+      this.$store.commit('Postlist/resetState')
 
     }
 }

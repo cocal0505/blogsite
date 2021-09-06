@@ -2,15 +2,29 @@
   <div
     v-if="dropdowState"
     class="dropdown">
-    <ul class="list">
-      <li
-        v-for="dropdown in dropdowns"
-        :key="dropdown.title"
-        class="list-item">
-        <RouterLink
-          :to="dropdown.link">
-          {{ dropdown.title }}
-        </RouterLink>
+    <ul 
+    v-if="accounts.username"
+    class="list">
+      <li 
+       v-for="dropdown in dropdowns"
+      class="list-item"
+      :key="dropdown.title">
+         {{dropdown.title}}
+      </li>
+    </ul>
+
+    <ul
+    v-else
+    class="dropdown">
+        <li
+         v-for="dropdown in dropdowns2"
+      class="list-item"
+      :key="dropdown.title">
+      <RouterLink 
+      :to="dropdown.link">
+          {{dropdown.title}}
+      </RouterLink>
+          
       </li>
     </ul>
   </div>
@@ -23,19 +37,21 @@ export default {
         return{
             dropdowns: [
                 {
-                    title: "LogIn",
-                    link: "#"
+                    title: "LogOut",
+                    link: "/Login/"
                 },
                 {
-                    title: "LogOut",
+                    title: "changeID",
                     link: "#"
+                },
+            ],
+            dropdowns2:[
+                  {
+                    title: "LogIn",
+                    link: "/Login/"
                 },
                 {
                     title: "Register",
-                    link: "#"
-                },
-                {
-                    title: "ChangePW",
                     link: "#"
                 },
             ]
@@ -43,7 +59,10 @@ export default {
     },
     computed:{
         dropdowState(){
-            return this.$store.state.dropdown
+            return this.$store.state.Postlist.dropdown
+        },
+        accounts(){
+            return this.$store.state.Userdata.account
         }
     }
 }
@@ -72,6 +91,7 @@ export default {
         }
         .list-item:first-child{
             margin-top:0px;
+            cursor: pointer;
         }
     }
     

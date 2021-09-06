@@ -3,6 +3,7 @@ import Home from "./Home.vue"
 import PostDetail from  "./PostDetail.vue"
 import PostList from "./PostList.vue"
 import postlistExtra from  "./postlistExtra.vue"
+import Login from "./Login.vue"
 export default createRouter ({
   // hash 모드 
   history: createWebHashHistory(), 
@@ -27,6 +28,10 @@ export default createRouter ({
     {
       path:'/postlist/extra',
       component: postlistExtra,
+    },
+    {
+      path: '/Login/', 
+      component : Login
     }
      
   ]

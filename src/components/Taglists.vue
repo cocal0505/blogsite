@@ -1,16 +1,15 @@
 <template>
-<RouterLink 
-to='/postlist/extra'
-@click="totag(taglist.name)"
-class="tags">
+  <RouterLink 
+    to="/postlist/extra"
+    @click="totag(taglist.name)"
+    class="tags">
     <h1 class="tags-item2">
-    {{ taglist.name }} 
-    <h1 class="tags-item">
-      {{ taglist.count }}
+      {{ taglist.name }} 
+      <h1 class="tags-item">
+        {{ taglist.count }}
+      </h1>
     </h1>
-  </h1>
-</RouterLink>
-  
+  </RouterLink>
 </template>
 
 <script>
@@ -23,7 +22,7 @@ export default {
     },
     methods:{
        totag(name){
-           this.$store.dispatch('fetchdata',name)
+           this.$store.dispatch('Postlist/fetchdata',name)
           
        }
     }

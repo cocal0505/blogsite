@@ -53,14 +53,14 @@ export default {
         },
          collectdata(){
             const collectedData = this.datalist
-            this.$store.commit('fetchdata', collectedData)
-            this.$store.commit('resetState')
+            this.$store.commit('Postlist/fetchdata', collectedData)
+            this.$store.commit('Postlist/resetState')
             
         },
     },
     computed:{
       backgroundState(){
-        return this.$store.state.open
+        return this.$store.state.Postlist.open
       }
     }
 }

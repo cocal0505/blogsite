@@ -13,8 +13,8 @@ export default {
  
   },
    created(){
-      this.$store.commit('resetState')
-      this.$store.dispatch('fetchdata')
+      this.$store.commit('Postlist/resetState')
+      this.$store.dispatch('Postlist/fetchdata')
     }
 }
 </script>

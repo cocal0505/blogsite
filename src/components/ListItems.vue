@@ -33,12 +33,12 @@
 export default {
     computed:{
       getdata(){
-        return this.$store.state.collectedData1
+        return this.$store.state.Postlist.collectedData1
       }
     }, 
     methods:{
       delete1(id){
-        this.$store.commit('deletecollected',id)
+        this.$store.commit('Postlist/deletecollected',id)
       }
     }
 }

@@ -13,7 +13,21 @@
         home
       </RouterLink>
     </div>
+
+    
+     
+  
     <div class="dot-container">
+       <div
+        v-if="account.username"
+        class="account1"> 
+        {{ account.username }} 
+      </div>
+      
+    <div
+     v-else
+     class="accouunt2">
+    </div>
       <div
         @click="dropdown"
         class="setting-btn">
@@ -35,11 +49,16 @@ export default {
   },
     methods:{
       switch1(){
-        this.$store.commit('openSideBar')
+        this.$store.commit('Postlist/openSideBar')
        
       }, 
       dropdown(){
-        this.$store.commit('openDropDown')
+        this.$store.commit('Postlist/openDropDown')
+      }
+    },
+    computed:{
+      account(){
+        return this.$store.state.Userdata.account
       }
     }
 }
@@ -78,14 +97,29 @@ export default {
      .dot-container{
        width:100%;
        height:40px;
-       position:relative;
+       display:flex;
+       justify-content: flex-end;
+       align-items: center;
+       
+       .account1{
+          background-color: rgb(215, 189, 245);
+          padding: 2px 10px;
+          border-radius: 50px;
+          color:white;
+       }
+       .accouunt2{
+          height:30px;
+          width:30px;
+          background-color:rgb(215, 189, 245);
+          border-radius:50px;
+       }
        .setting-btn{
       padding:5px 14px;
       cursor: pointer;
       border-radius:50%; 
-      position:absolute;
-      right:10px;
-      top:5px;
+      margin-right:10px;
+      margin-left:10px;
+     
        .dot{
          width:4px;
          height:4px;
@@ -97,6 +131,7 @@ export default {
          margin-top:0px
        }
      }
+     
      .setting-btn:hover{
         background-color:rgb(189, 189, 189);
       }

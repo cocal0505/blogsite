@@ -23,7 +23,7 @@
 export default {
   computed:{
     status(){
-      return this.$store.state.status
+      return this.$store.state.Postlist.status
     }
   }
 }

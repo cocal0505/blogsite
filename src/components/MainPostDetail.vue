@@ -48,7 +48,7 @@
               v-for="(tagcloud, index) in fetchtags"
               :key="index"
               :style="{ color : tagcloud.color}"
-              :taglist="tagcloud"/>
+              :taglist="tagcloud" />
           </div>
         </div>
       </div>
@@ -65,30 +65,30 @@ export default {
   }, 
    computed:{
       toogledPadding1(){
-        return this.$store.state.status 
+        return this.$store.state.Postlist.status 
       },
       fetchpostdetail(){
-        return this.$store.state.detaildata1
+        return this.$store.state.Postlist.detaildata1
       },
       fetchtags(){
-        return this.$store.state.tags
+        return this.$store.state.Postlist.tags
       }
    },
    created(){
-     this.$store.dispatch('fetchdetail',{
+     this.$store.dispatch('Postlist/fetchdetail',{
        id : this.$route.params.postid
      })
-     this.$store.dispatch('fetchtag')
+     this.$store.dispatch('Postlist/fetchtag')
    }, 
    methods:{
      prev(preid){
 
-       this.$store.dispatch('fetchdetail',{
+       this.$store.dispatch('Postlist/fetchdetail',{
         id : preid
       })
      },
      next(nextid){
-      this.$store.dispatch('fetchdetail',{
+      this.$store.dispatch('Postlist/fetchdetail',{
         id : nextid
      })
    }
