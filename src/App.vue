@@ -20,9 +20,9 @@ export default {
   },
 }
 </script>
-<style scoped lang="scss">
+<style lang="scss">
     #app{
-       font-family:"Oswald";
+       font-family:"Roboto";
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }

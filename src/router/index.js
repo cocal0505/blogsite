@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory} from 'vue-router'
 import Home from "./Home.vue"
 import PostDetail from  "./PostDetail.vue"
 import PostList from "./PostList.vue"
+import postlistExtra from  "./postlistExtra.vue"
 export default createRouter ({
   // hash 모드 
   history: createWebHashHistory(), 
@@ -20,8 +21,13 @@ export default createRouter ({
       component: PostDetail,
     },
     {
-      path:'/postList', 
+      path:'/postList/', 
       component: PostList,
+    },
+    {
+      path:'/postlist/extra',
+      component: postlistExtra,
     }
+     
   ]
 })

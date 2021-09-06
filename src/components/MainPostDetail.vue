@@ -16,8 +16,13 @@
           <p class="maincontent paragraph">
             {{ fetchpostdetail.content }}
           </p>
-          <div class="maincontent tag">
-            {{ fetchpostdetail.tags }}
+          <div class="tagcon">
+            <div 
+              v-for="tag in fetchpostdetail.tags"
+              :key="tag"
+              class="maincontent tag">
+              {{ tag }}
+            </div>
           </div>
         </div>
         <div class="sidenav-container">
@@ -26,7 +31,7 @@
             @click="prev(fetchpostdetail.prev.id)"
             v-if="fetchpostdetail.prev"
             class="sidenav prepost">
-            <h1>{{ fetchpostdetail.prev.title }}t</h1>
+            <h1>{{ fetchpostdetail.prev.title }}</h1>
           </RouterLink>
           <RouterLink 
             :to="`/postDeatil/${fetchpostdetail.next.id}`"
@@ -36,7 +41,14 @@
             <h1>{{ fetchpostdetail.next.title }}</h1>
           </RouterLink>
           <div class="sidenav tagcloud">
-            <h1>  {{ fetchpostdetail.tags }} </h1>
+            <div class="tag-title">
+              Tags Cloud
+            </div>
+            <TagLists  
+              v-for="(tagcloud, index) in fetchtags"
+              :key="index"
+              :style="{ color : tagcloud.color}"
+              :taglist="tagcloud"/>
           </div>
         </div>
       </div>
@@ -46,7 +58,11 @@
 
 
 <script>
+import  TagLists from "./Taglists.vue"
 export default {
+  components:{
+    TagLists
+  }, 
    computed:{
       toogledPadding1(){
         return this.$store.state.status 
@@ -54,11 +70,15 @@ export default {
       fetchpostdetail(){
         return this.$store.state.detaildata1
       },
+      fetchtags(){
+        return this.$store.state.tags
+      }
    },
    created(){
      this.$store.dispatch('fetchdetail',{
        id : this.$route.params.postid
      })
+     this.$store.dispatch('fetchtag')
    }, 
    methods:{
      prev(preid){
@@ -86,10 +106,10 @@ export default {
     transition: all .3s;
     .postconatiner{
       width:1000px;
-      height:100%;
       background-color:rgb(238, 238, 238);
       margin-left:auto;
       margin-right:auto;
+      padding-bottom:50px;
       .posttitle{
           width:500px;
           height:100px;
@@ -108,43 +128,82 @@ export default {
         display:flex;
         margin-top:40px; 
         margin-left:20px; 
+        box-sizing: border-box;
         .maincontent-container{
           width:500px;
-          height:400px; 
+         
           background-color: rgb(209, 209, 209);
           padding:10px;
-          box-sizing: border-box;
+       
           border-radius: 5px;
           flex-basis: 100%;
           box-shadow: 0.1px 1px 8px 1px rgb(158, 158, 158);
           .paragraph{
             width:400px;
-            height:360px;
+            
+            font-family: sans-serif;
+            font-weight:500px;
+            font-size:20px;
+            line-height:30px;
           }
+          .tagcon{
+
+            width:400px;
+            margin-top:20px;
+            padding:10px;
+              .tag{
+              background-color:rgb(135, 184, 170);
+              padding:5px 10px; 
+              display:inline;
+              border-radius: 10px;
+              color:white;
+              font-weight:600;
+              margin-right: 5px;
+          }
+          }
+          
         }
         .sidenav-container{
-          
+
           display:flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
           flex-basis: 100%;
-         
+          box-sizing: border-box;
           .sidenav{
             width:300px;
-            height:50px;
+            padding:20px;
             background-color: rgb(209, 209, 209);
             border-radius: 5px;
-            padding:10px;
             margin-bottom:10px;
+            text-align: center;
              box-shadow: 0.1px 1px 8px 1px rgb(158, 158, 158);
+            
           }
+          .sidenav.tagcloud{
+               display:flex;
+                align-items: center;
+                margin-top:10px;
+                flex-wrap: wrap;
+                
+               .tag-title{
+                font-weight: 900;
+                width:300px;
+                margin-bottom:15px;
+                text-align: left;
+            }
+              
+             }
         }
       }
     }
 }
 
-
+ a{
+  text-decoration: none;
+  color:rgb(88, 88, 88)
+             }
 
 .padding1{
         padding: 60px 0px 60px 200px;

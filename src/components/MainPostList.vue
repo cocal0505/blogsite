@@ -51,12 +51,16 @@ export default {
 <style scoped lang="scss">
 
  @media screen and (min-width:500px){
+
+
+
    .HomeContainer2{
     box-sizing: border-box;
     padding:60px 0px 60px 0px; 
     transition: all .3s;
-  
-   background-color:rgb(214, 240, 255);
+    
+
+
     .PostList-nav{
       display:flex;
       width:700px;

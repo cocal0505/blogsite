@@ -9,7 +9,8 @@ export default createStore({
     dropdown : false,
     open: false,
     collectedData1:[],
-    detaildata1 :{}
+    detaildata1 :{},
+    tags :[]
   }),
   mutations: {
     openSideBar(state){
@@ -38,24 +39,34 @@ export default createStore({
     fetchfromserver(state,serverdata){
         console.log("fetchfromfirst",serverdata)
         state.collectedData1 = serverdata 
+       
+      
     },
     fetchdetail(state,detaildata){
       state.detaildata1 = detaildata
+
       console.log("detail",detaildata)
     },
-    // fetchprevious(state,previosdata){
-    //     console.log("previoustitle", previosdata)
-    // },
-    // fetchnext(state,nextdata){
-    //   console.log("nexttitle",nextdata)
-    // }
+    fetchtags(state,tagsdata){
+      tagsdata.forEach((tag)=>{
+        if(tag.weight ===  3) tag.color = "rgb(0, 90, 65)";
+        else if(tag.weight === 2) tag.color = "rgb(48, 106, 129)";
+        else if(tag.weight === 1) tag.color = 'white';
+      })
+      state.tags = tagsdata
+      console.log(state.tags)
+    }
+
   },
   actions: {
 
-   
-   async fetchdata({commit}){
+   //최초테아터리스트호출
+   async fetchdata({commit},payload1){
+       
       try{
-        const res = await _fetchdata()
+        const res = await _fetchdata({
+           tags : payload1 
+        })
         commit( 'fetchfromserver',res.data)
       }catch(message){
         console.log(message)
@@ -64,23 +75,16 @@ export default createStore({
       }
     },
      
+
+  
     async fetchdetail({commit},payload){
       const {id} = payload
-      // const previousID1 = Number(previousID)
-      // const result1 = previousID1-1
-      // console.log("previous number",result1)
       try{
           const res = await _fetchdeatil({
             id : id
           })
           commit('fetchdetail',res.data)
 
-          // if( updateid < id){
-          //   const res = await _fetchdeatil({
-          //     id : updateid 
-          //   })
-          //   commit('fetchprevious',res.data.title)
-          // }
       }catch(message){
         console.log(message)
       }finally{
@@ -88,23 +92,24 @@ export default createStore({
       }
     },
 
-    // async fetchdeatil2({commit},payload){
-    //   const { nextID } = payload
-    //   const nextID1 = Number(nextID)
-    //   const result2 = nextID1+1
-    //   console.log("next number",result2)
+    async fetchtag({commit}){
 
-    //   try{
-    //     const res = await _fetchdeatil({
-    //       id: result2
-    //     })
-    //     commit('fetchnext',res.data.title)
-    //   }catch(message){
-    //     console.log(message)
-    //   }finally{
-    //     console.log("end")
-    //   }
-    // }
+      try{
+        const res = await _fetchtag({
+        })
+        commit('fetchtags',res.data)
+        
+      }catch(message){
+          console.log(message)
+      }finally{
+        console.log("tagend")
+      }
+      
+    }
+
+
+
+
   },
   modules: {
     Postlist
@@ -114,10 +119,24 @@ export default createStore({
 
 
 
-function _fetchdata(){
- 
+function _fetchdata(payload){
+     
+        
+     const { tags } =payload
+      
+      console.log(tags)
+
+      const geturl = tags 
+      ? `/api/post/list/?tagname=${tags}`
+      :"/api/post/list/"
+        // if (tags) {
+        //  let geturl = `/api/post/list/?tagname=${tags}`
+        // }else{
+        //  let geturl = "/api/post/list/"
+        // }
+
       return new Promise ((resolve,reject)=>{
-        axios.get('/api/post/list')
+        axios.get( geturl)
           .then(res => {
             if(res.data.Error){
               reject(res.data.Error)
@@ -162,3 +181,19 @@ function _fetchdeatil(payload){
 
 
 }
+
+
+
+function _fetchtag(){
+
+  return new Promise((resolved,reject)=>{
+    axios.get('/api/tag/cloud/')
+    .then(res=>{
+      resolved(res)
+    })
+    .catch(err=>{
+      reject(err.messgae)
+    })
+  })
+}
+
