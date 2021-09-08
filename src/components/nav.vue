@@ -18,16 +18,16 @@
      
   
     <div class="dot-container">
-       <div
+      <div
         v-if="account.username"
         class="account1"> 
         {{ account.username }} 
       </div>
       
-    <div
-     v-else
-     class="accouunt2">
-    </div>
+      <div
+        v-else
+        class="accouunt2">
+      </div>
       <div
         @click="dropdown"
         class="setting-btn">

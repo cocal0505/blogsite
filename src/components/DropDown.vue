@@ -3,28 +3,30 @@
     v-if="dropdowState"
     class="dropdown">
     <ul 
-    v-if="accounts.username"
-    class="list">
-      <li 
-       v-for="dropdown in dropdowns"
-      class="list-item"
-      :key="dropdown.title">
-         {{dropdown.title}}
+      v-if="accounts.username"
+      class="list">
+      <RouterLink 
+        to="/" 
+        @click="SiginOut"
+        class="list-item">
+        Log out
+      </RouterLink>
+      <li class="list-item">
+        changeID
       </li>
     </ul>
 
     <ul
-    v-else
-    class="dropdown">
-        <li
-         v-for="dropdown in dropdowns2"
-      class="list-item"
-      :key="dropdown.title">
-      <RouterLink 
-      :to="dropdown.link">
-          {{dropdown.title}}
-      </RouterLink>
-          
+      v-else
+      class="dropdown">
+      <li
+        v-for="dropdown in dropdowns2"
+        class="list-item"
+        :key="dropdown.title">
+        <RouterLink 
+          :to="dropdown.link">
+          {{ dropdown.title }}
+        </RouterLink>
       </li>
     </ul>
   </div>
@@ -63,6 +65,11 @@ export default {
         },
         accounts(){
             return this.$store.state.Userdata.account
+        }
+    },
+    methods:{
+        SiginOut(){
+             this.$store.dispatch('Userdata/SignOut') 
         }
     }
 }

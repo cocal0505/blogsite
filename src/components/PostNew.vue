@@ -2,24 +2,33 @@
   <div 
     :class="{postNewContainer : backgroundState}"
     class="postNewContainer1">
-    <div class="input-container">
-      <h1>id</h1>
+    <form id="input-container">
+      <h1>ID</h1>
       <input 
-        @keyup="data1"
-      
+        name="id"
         type="text" />
-      <h1>title</h1>
+      <h1>Title</h1>
       <input 
-        @keyup="data2"
-     
+        name="title"
         type="text" />
-      <h1>name</h1>
+      <h1>Descrption</h1>
       <input 
-        @keyup="data3"
- 
+        name="description"
         type="text" />
-    </div>
-    {{ this.datalist }}
+      <h1>content</h1>
+      <textarea 
+        name="content"
+        type=""></textarea>
+      <h1>owner</h1>
+      <input 
+        name="owner"
+        type="text" />
+      <h1>tags</h1>
+      <input 
+        name="tags"
+        type="text" />
+    </form>
+   
     <button 
       @click="collectdata"
       class="btn-save">
@@ -33,29 +42,14 @@
 export default {
     data(){
         return{
-            datalist : 
-                {
-                 listId :'',
-                 listTitle:'',
-                 listAuthor:''
-                },
         }
     },
     methods:{
-        data1(e){
-            this.datalist.listId = e.target.value
-        },
-        data2(e){
-             this.datalist.listTitle = e.target.value
-        },
-        data3(e){
-           this.datalist.listAuthor = e.target.value
-        },
          collectdata(){
-            const collectedData = this.datalist
-            this.$store.commit('Postlist/fetchdata', collectedData)
+           const createdata = new FormData (document.getElementById('input-container'))
+           console.log(createdata)
+            this.$store.dispatch('Postlist/creatdata', createdata)
             this.$store.commit('Postlist/resetState')
-            
         },
     },
     computed:{

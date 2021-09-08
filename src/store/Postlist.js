@@ -24,7 +24,7 @@ export default {
         state.dropdown = !state.dropdown
       },
       fetchdata(state,collectedData){
-        state.collectedData1.push(collectedData)
+        state.collectedData1 = collectedData
         console.log("fetchfromfirst",state.collectedData1)
       }, 
       deletecollected(state,id){
@@ -54,10 +54,27 @@ export default {
         })
         state.tags = tagsdata
         console.log(state.tags)
-      }
+      },
+      addtolist(state,creatdata){
+           
+        state.collectedData1.push(creatdata)
+    }
   
     },
     actions: {
+
+
+
+
+      creatdata({commit},payload){
+        axios.post('/api/post/create/',payload)
+        .then(res=>{
+            commit('addtolist', res.data)
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    },
   
      //최초테아터리스트호출
      async fetchdata({commit},payload1){
@@ -105,6 +122,8 @@ export default {
         }
         
       }
+
+      
   
   
   

@@ -11,7 +11,6 @@ export default {
     },
     created(){
       this.$store.commit('Postlist/resetState')
-  
     }
 }
 </script>
