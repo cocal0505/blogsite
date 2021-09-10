@@ -9,7 +9,9 @@ export default {
       open: false,
       collectedData1:[],
       detaildata1 :{},
-      tags :[]
+      tags :[],
+      edit1: false,
+      indexNum : []
     }),
     mutations: {
       openSideBar(state){
@@ -19,6 +21,7 @@ export default {
         state.status = false
         state.dropdown = false
         state.open = false
+        state.edit1 = false
       },
       openDropDown(state){
         state.dropdown = !state.dropdown
@@ -27,10 +30,10 @@ export default {
         state.collectedData1 = collectedData
         console.log("fetchfromfirst",state.collectedData1)
       }, 
-      deletecollected(state,id){
-        state.collectedData1.splice(id,1)
+      deletecollected(state,indexNumber){
+        state.collectedData1.splice(indexNumber,1)
         console.log("deletedata",state.collectedData1)
-        console.log("deletenumber",id)
+        console.log("deletenumber",indexNumber)
       }, 
       postnewstatus(state){
         state.open = !state.open
@@ -58,22 +61,87 @@ export default {
       addtolist(state,creatdata){
            
         state.collectedData1.push(creatdata)
-    }
+      },
+      editstate(state){
+        state.edit1 = !state.edit1
+        console.log("clicked")
+      },
+      updatepost(state,newdata){
+        const {data, indexnumber} =newdata
+        state.collectedData1.splice(indexnumber,1,data)
+        console.log(state.collectedData1)
+       
+      },
+      indexnumbers(state,data){
+          state.indexNum = data 
+          // console.log(state.indexNum)
+          // console.log(data )
+      }
   
     },
     actions: {
 
+      // delete데이터 //
+      deleteList({commit},payload){
+        const {idNumber ,indexNumber, account} =payload
+
+        if(account === undefined){
+          alert("please log in first")
+          console.log("true")
+          return; 
+        }else{
+          axios.post(`/api/post/${idNumber}/delete/`)
+          .then(res=>{
+            console.log(res)
+            commit('deletecollected',indexNumber)
+          })
+          .catch(err=>{
+            console.log(err)
+          })
+        }
+       
+      },
 
 
 
+
+
+        // 데이터 업테이트 //
+        updatecontents({commit},payload){
+            const { data, index } =payload
+            
+              axios.post(`/api/post/${index}/update/`,data)
+              .then(res=>{
+                commit ('updatepost',{
+                  data : res.data,
+                  indexnumber :index-1
+                })
+              }).catch(err=>{
+                console.log(err)
+              })
+            
+         
+           
+        }, 
+
+
+      //데이터 생성 호출 // 
       creatdata({commit},payload){
-        axios.post('/api/post/create/',payload)
+        const { id, account } =payload
+        if(account === undefined){
+          alert("please log in first")
+          console.log("true")
+          return; 
+        }else{
+          axios.post('/api/post/create/' ,id)
         .then(res=>{
             commit('addtolist', res.data)
         })
         .catch(err=>{
             console.log(err)
         })
+        }
+        
     },
   
      //최초테아터리스트호출

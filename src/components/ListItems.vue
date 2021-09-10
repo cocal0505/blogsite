@@ -18,11 +18,14 @@
             {{ list.owner }}
           </div>
         </RouterLink>
-        <div class="list acttions">
-          <button @click="delete1(index)">
+        <div class="list-acttions">
+          <button @click="delete1(list.id,index,accounts.username)">
             delete
           </button>
-          <button>edit</button>
+          <button @click="update(list.id,accounts.username)">
+            edit
+          </button>
+          <Update />
         </div>
       </li>
     </ul>
@@ -30,17 +33,47 @@
 </template>
 
 <script>
+import Update from "./Update.vue"
+
 export default {
+  components:{
+    Update,
+  }, 
     computed:{
       getdata(){
         return this.$store.state.Postlist.collectedData1
+      }, 
+      accounts(){
+        return this.$store.state.Userdata.account
       }
     }, 
     methods:{
-      delete1(id){
-        this.$store.commit('Postlist/deletecollected',id)
+      delete1(id,id2,accounts){
+        
+        this.$store.dispatch('Postlist/deleteList',{
+          idNumber:id, 
+          indexNumber: id2,
+          account : accounts
+        })
+        console.log(typeof(id))
+        console.log(typeof(id22))
+        console.log(accounts)
+      },
+      update(id1,accounts){
+        if(accounts === undefined){
+          alert("plaese log in first")
+          return;
+        }else{
+          this.$store.commit('Postlist/indexnumbers',id1)
+         this.$store.commit('Postlist/editstate')
+         this.$store.dispatch('Postlist/fetchdetail',{
+           id : id1,
+         })
+        }
+         
       }
-    }
+    },
+   
 }
 </script>
 
@@ -57,7 +90,7 @@ a{
     .listcontainer{
       .listitems{
         .listitem{
-        margin-top:20px;
+        margin-top:60px;
         width:700px;
         height:150px;
         background-color: white;
@@ -80,7 +113,10 @@ a{
         .listitemcontainter:hover{
           background-color:rgb(212, 212, 212);
         }
-        
+        .list-acttions{
+          padding:10px;
+      
+        }
       }
     }
   }

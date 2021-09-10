@@ -7,7 +7,7 @@
         Post List
       </div>
       <button 
-        @click="postNewList"
+        @click="postNewList(accounts.username)"
         class="postNewList">
         Post new
       </button>
@@ -37,10 +37,20 @@ export default {
       toogledPadding2(){
           return this.$store.state.Postlist.status 
       },
+      accounts(){
+              return this.$store.state.Userdata.account
+      }
     },
     methods:{
-       postNewList(){
-          this.$store.commit('Postlist/postnewstatus')
+       postNewList(account){
+
+         if(account === undefined){
+           alert("log in first")
+           return;
+         }else{
+              this.$store.commit('Postlist/postnewstatus')
+         }
+       
       }
     }
     
